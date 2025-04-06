@@ -1,3 +1,5 @@
+from typing import Tuple
+import networkx as nx
 from graphhunter.optimization import Optimizer
 
 
@@ -9,7 +11,7 @@ class BestOfN(Optimizer):
         self.generator = generator
         self.n = n
 
-    def find_max(self, invariant):
+    def find_max(self, invariant) -> Tuple[nx.Graph, float]:
         best = None
         best_score = float('-inf')
         for _ in range(self.n):

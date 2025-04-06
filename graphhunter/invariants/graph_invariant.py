@@ -15,7 +15,12 @@ class GraphInvariant(metaclass=ABCMeta):
         pass
 
     def __eq__(self, value):
-        return super().__eq__(value)
+        if isinstance(value, (float, int)):
+            return InvariantEqualToConst(self, value)
+        elif isinstance(value, GraphInvariant):
+            raise NotImplementedError("Equality comparison between two invariants is not implemented.")
+        else:
+            raise TypeError(f"Unsupported type for equality comparison: {type(value)}")
 
 
 class InvariantEqualToConst(GraphInvariant):
@@ -24,4 +29,4 @@ class InvariantEqualToConst(GraphInvariant):
         self.value = value
     
     def evaluate(self, graph) -> bool:
-        return self.invariant.evaluate() == self.value
+        return self.invariant.evaluate(graph) == self.value

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from graphhunter.invariants import Invariant
+from graphhunter.invariants import GraphInvariant
 
 
 @dataclass
@@ -8,6 +8,6 @@ class Goal:
     An optimzation goal, in the form of 'maximize Reward subject to Constraint'
     """
     # A scalar reward we need to maximize
-    reward: Invariant
+    reward: GraphInvariant
     # A condition that must be satisfied
-    condition: Invariant
+    condition: GraphInvariant

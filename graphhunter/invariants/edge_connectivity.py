@@ -1,3 +1,4 @@
+from typing import Any
 import networkx as nx
 from graphhunter.invariants import GraphInvariant
 
@@ -10,4 +11,4 @@ class EdgeConnectivity(GraphInvariant):
         """
         Evaluate on a specific graph
         """
-        return nx.edge_connectivity(G)
+        return nx.edge_connectivity(graph)
