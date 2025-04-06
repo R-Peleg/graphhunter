@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 import networkx as nx
 
 
-class GraphInvariant(ABCMeta):
+class GraphInvariant(metaclass=ABCMeta):
     """
     Base class for graph invariants
     """

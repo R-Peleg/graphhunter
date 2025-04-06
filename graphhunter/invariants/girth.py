@@ -1,3 +1,4 @@
+from typing import Any
 import networkx as nx
 from graphhunter.invariants import GraphInvariant
 
@@ -10,5 +11,7 @@ class Girth(GraphInvariant):
         """
         Evaluate on a specific graph
         """
-        cycles = nx.minimum_cycle_basis(G)
+        cycles = nx.minimum_cycle_basis(graph)
+        if not cycles:
+            return float('inf')
         return min(len(cycle) for cycle in cycles)
