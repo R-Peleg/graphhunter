@@ -21,6 +21,12 @@ class GraphInvariant(metaclass=ABCMeta):
             raise NotImplementedError("Equality comparison between two invariants is not implemented.")
         else:
             raise TypeError(f"Unsupported type for equality comparison: {type(value)}")
+    
+    def __neg__(self):
+        """
+        Support for unary minus operator
+        """
+        return NegatedInvariant(self)
 
 
 class InvariantEqualToConst(GraphInvariant):
@@ -30,3 +36,14 @@ class InvariantEqualToConst(GraphInvariant):
     
     def evaluate(self, graph) -> bool:
         return self.invariant.evaluate(graph) == self.value
+
+
+class NegatedInvariant(GraphInvariant):
+    """
+    Represents a negated graph invariant
+    """
+    def __init__(self, invariant: GraphInvariant):
+        self.invariant = invariant
+    
+    def evaluate(self, graph: nx.Graph) -> Any:
+        return -self.invariant.evaluate(graph)

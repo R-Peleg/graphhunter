@@ -1,4 +1,3 @@
-import networkx as nx
 from graphhunter.invariants import Girth, EdgeConnectivity
 from graphhunter.api import best_random, Goal
 
