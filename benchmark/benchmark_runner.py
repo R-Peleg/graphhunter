@@ -2,11 +2,13 @@
 Benchmark Runner for GraphHunter
 This script runs various benchmark cases using the GraphHunter library.
 
-Usage: `python -m benchmark.benchmark_runner`
+Usage: `python -m benchmark.benchmark_runner [--benchmark BENCHMARK_NAME] [--n-graphs N]`
 """
+import argparse
 from typing import Callable
 from graphhunter.api import best_random, Goal
 from benchmark.benchmark_case import BenchmarkCase
+from benchmark.benchmark_cases import AVAILABLE_BENCHMARKS
 
 def run_random_search(benchmark: BenchmarkCase, n_graphs: int = 100) -> tuple:
     """Run random search for given benchmark case."""
@@ -30,10 +32,20 @@ def run_benchmark(benchmark: BenchmarkCase,
     best_graph, best_value = search_method(benchmark, **search_params)
     print_results(benchmark, best_graph, best_value)
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='GraphHunter Benchmark Runner')
+    parser.add_argument(
+        '--benchmark',
+        type=str,
+        choices=list(AVAILABLE_BENCHMARKS.keys()),
+        default=list(AVAILABLE_BENCHMARKS.keys())[0],
+        help='Benchmark case to run'
+    )
+    return parser.parse_args()
+
 if __name__ == "__main__":
-    from benchmark.benchmark_cases import AVAILABLE_BENCHMARKS
+    args = parse_arguments()
     
-    # Run all available benchmarks
-    for name, get_benchmark in AVAILABLE_BENCHMARKS.items():
-        benchmark = get_benchmark()
-        run_benchmark(benchmark, n_graphs=100)
+    # Run selected benchmark
+    benchmark = AVAILABLE_BENCHMARKS[args.benchmark]()
+    run_benchmark(benchmark, n_graphs=1000)
