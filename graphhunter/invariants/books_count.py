@@ -17,6 +17,7 @@ class CountBooks(GraphInvariant):
         Parameters:
         books_size_graph (int): The size of the graph.
         book_size_complement (int): The size of the complement of the book.
+        Note: We define B_n as n-vertices book here. Some places define it as n+2-vertices book so beware.
         """
         self.books_size_graph = books_size_graph
         self.book_size_complement = book_size_complement

@@ -20,17 +20,20 @@ def run_random_search(benchmark: BenchmarkCase, n_graphs: int = 100) -> tuple:
     )
     return best_graph, best_value
 
-def print_results(benchmark: BenchmarkCase, best_graph, best_value):
+def print_results(benchmark: BenchmarkCase, best_graph, best_value, runtime):
     """Print benchmark results."""
+    print(f"Run time: {runtime}")
     print(f"Best value: {best_value}")
     print(f"Graph edges: {best_graph.edges()}")
 
-def run_benchmark(benchmark: BenchmarkCase, 
+def run_benchmark_case(case: BenchmarkCase, 
                  search_method: Callable = run_random_search,
                  **search_params):
     """Run the benchmark with specified search method."""
+    start_time = time.time()
     best_graph, best_value = search_method(benchmark, **search_params)
-    print_results(benchmark, best_graph, best_value)
+    end_time = time.time()
+    print_results(benchmark, best_graph, best_value, end_time - start_time)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='GraphHunter Benchmark Runner')
@@ -48,4 +51,5 @@ if __name__ == "__main__":
     
     # Run selected benchmark
     benchmark = AVAILABLE_BENCHMARKS[args.benchmark]()
-    run_benchmark(benchmark, n_graphs=1000)
+    for case in benchmark:
+        run_benchmark_case(case, n_graphs=1000)

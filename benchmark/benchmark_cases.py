@@ -3,7 +3,7 @@ from graphhunter.invariants.books_count import CountBooks
 from graphhunter.api import Goal
 from .benchmark_case import BenchmarkCase
 
-def get_girth_benchmark(num_vertices: int = 5) -> BenchmarkCase:
+def get_girth_benchmark(num_vertices: int = 5) -> list[BenchmarkCase]:
     """Create benchmark case for largest girth problem."""
     return BenchmarkCase(
         name="Largest girth in 2-edge-connected graphs",
@@ -15,16 +15,16 @@ def get_girth_benchmark(num_vertices: int = 5) -> BenchmarkCase:
         params={}
     )
 
-def get_books_ramsey_benchmark() -> BenchmarkCase:
+def get_books_ramsey_benchmark() -> list[BenchmarkCase]:
     """Create benchmark case for books Ramsey number."""
-    return BenchmarkCase(
+    return [BenchmarkCase(
         name="Books Ramsey number",
         goal=Goal(
             reward=-CountBooks(5, 7)
         ),
         num_vertices=17,
         params={}
-    )
+    )]
 
 AVAILABLE_BENCHMARKS = {
     "girth": get_girth_benchmark,
